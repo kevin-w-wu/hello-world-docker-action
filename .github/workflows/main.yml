@@ -10,14 +10,11 @@ jobs:
       - name: Set environment for branch
         run: |
           if [[ $GITHUB_REF == 'refs/heads/master' ]]; then
-              echo "GLCOUD_PROJECT=my-project-master" >> "$GITHUB_ENV"
-              echo "VERCEL_TARGET=master" >> "$GITHUB_ENV"
+              echo "ENV=prod" >> "$GITHUB_ENV"
           elif [[ $GITHUB_REF == 'refs/heads/stg' ]]; then
-              echo "GLCOUD_PROJECT=my-project-stg" >> "$GITHUB_ENV"
-              echo "VERCEL_TARGET=staging" >> "$GITHUB_ENV"
+              echo "ENV=stg" >> "$GITHUB_ENV"
           else
-              echo "GLCOUD_PROJECT=my-project-dev" >> "$GITHUB_ENV"
-              echo "VERCEL_TARGET=dev" >> "$GITHUB_ENV"
+              echo "ENV=dev" >> "$GITHUB_ENV"
           fi
       - name: Checkout
         uses: actions/checkout@v3
@@ -31,3 +28,5 @@ jobs:
         run: |
           echo "The time was ${{ steps.hello.outputs.time }}"
           echo $GITHUB_REF
+          echo $GITHUB_ENV
+          echo ${{ env.ENV }}
